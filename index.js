@@ -2,6 +2,7 @@ import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { LivroFisico, Ebook } from './TiposDeltens.js';
 import { Leitor } from './Leitor.js';
+import { AtendimentoBiblioteca } from './AtendimentoBiblioteca.js';
 
 const rl = readline.createInterface({ input, output });
 IniciarSistema();
@@ -12,12 +13,12 @@ async function IniciarSistema() {
     const nome = await rl.question("Digite o nome do leitor: ");
     const idade = parseInt(await rl.question("Digite a idade do leitor: "));
 
-    let leito;
-    leito = new Leitor(nome, idade);
-    if (idade < 12){
-        rl.close();
-        process.exit();
-    }
+    const leito = new Leitor(nome, idade);
+    const sistema = new AtendimentoBiblioteca();
+
+    sistema.cadastrarNovoLeitor("Flávio", "Dez");
+    sistema.cadastrarNovoLeitor("Flávio", 10);
+    sistema.cadastrarNovoLeitor("Flávio", 25);
 
     console.log("\n Selecione qual Item quer cadastrar:");
     console.log("1 - Livro Físico");

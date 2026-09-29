@@ -8,10 +8,13 @@ export class Leitor {
     get idade() {return this.#idade}
 
     set idade(novaIdade) {
+        if (typeof novaIdade !== 'number' || isNaN(novaIdade)){
+            throw new Error("ERR_TIPO_INVALIDO");
+        }
         if (novaIdade < 12){
             console.log("[BLOQUEIO] Leitor menor de 12 anos precisa do responsável para o cadastro");
-            this.#idade = novaIdade;
-            return;
+            throw new Error("ERR_LEITOR_MENOR_IDADE");
         }
+        this.#idade = novaIdade;
     }
 }
