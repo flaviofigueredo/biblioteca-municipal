@@ -3,6 +3,7 @@ import { stdin as input, stdout as output } from 'node:process';
 import { LivroFisico, Ebook } from './TiposDeltens.js';
 import { Leitor } from './Leitor.js';
 import { AtendimentoBiblioteca } from './AtendimentoBiblioteca.js';
+import { ItemBase } from './ItemBase.js';
 
 const rl = readline.createInterface({ input, output });
 IniciarSistema();
@@ -16,9 +17,9 @@ async function IniciarSistema() {
     const leito = new Leitor(nome, idade);
     const sistema = new AtendimentoBiblioteca();
 
-    sistema.cadastrarNovoLeitor("Flávio", "Dez");
-    sistema.cadastrarNovoLeitor("Flávio", 10);
-    sistema.cadastrarNovoLeitor("Flávio", 25);
+    sistema.cadastrarNovoLeitor(nome, "Dez");
+    sistema.cadastrarNovoLeitor(nome, 10);
+    sistema.cadastrarNovoLeitor(nome, 25);
 
     console.log("\n Selecione qual Item quer cadastrar:");
     console.log("1 - Livro Físico");
@@ -29,11 +30,6 @@ async function IniciarSistema() {
     const autor = await rl.question("Digite o Autor do Livro: ");
 
     const anoInfo = parseInt(await rl.question("Digite o Ano de Publicação do Livro: "));
-    if (anoInfo > new Date().getFullYear() || anoInfo < 1000){
-        console.log("Ano Inválido. Encerrando o programa.");
-        rl.close();
-        process.exit();
-    }
 
     const atraso = parseInt(await rl.question("Quantos dias de atraso tem essa devolução: "));
     if (atraso < 0){
@@ -48,10 +44,12 @@ async function IniciarSistema() {
         case 1:
             const corredor = parseInt(await rl.question("Digite o Número do Corredor do Livro: "));
             livro = new LivroFisico(titulo, autor, anoInfo, corredor, atraso);
+            livro.verificarAno(anoInfo);
             break;
         case 2:
             const formato = await rl.question("Digite o Formato do Arquivo do Livro: ");
             livro = new Ebook(titulo, autor, anoInfo, formato, atraso);
+            livro.verificarAno(anoInfo);
             break;
         default:
             console.log("Opção Inválida. Encerrando o programa.");
