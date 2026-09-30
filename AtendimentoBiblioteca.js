@@ -7,7 +7,8 @@ export class AtendimentoBiblioteca {
         try {
 
             console.log(`\n[INICIANDO COMUNICAÇÃO...]`);
-            const leito = new Leitor(nome, idade);
+            const leito = new Leitor(nome, idade)
+            leito.verificarIdade();
             console.log(`✅ Sucesso!`);
 
         } catch (excecaoCapturada) {
@@ -21,6 +22,8 @@ export class AtendimentoBiblioteca {
 
         }
     }
+
+
 
     traduzirErroParaOCliente(codigoTecnicoDoErro) {
         switch (codigoTecnicoDoErro) {

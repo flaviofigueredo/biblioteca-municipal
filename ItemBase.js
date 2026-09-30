@@ -7,20 +7,11 @@ export class ItemBase {
         }
         this.titulo = titulo;
         this.autor = autor;
-        this.anoPublicacao = anoInformado;
+        this.#anoPublicacao = anoInformado;
         this.anoAtual = new Date().getFullYear();
     }
-    get anoPublicacao() {return this.#anoPublicacao;}
-
-    set anoPublicacao(novoAno) {
-        if (typeof novoAno !== 'number' || isNaN(novoAno)){
-            throw new Error("ERR_TIPO_INVALIDO");
-        }
-        if (novoAno <= 1000 || novoAno > this.anoAtual) {
-            console.log("[BLOQUEIO] O ano da publicação do livro é inválido");
-            throw new Error("ERR_ANO_FORA_DO_LIMITE");
-        }
-        this.#anoPublicacao = novoAno;
+    get anoPublicacao() {
+        return this.#anoPublicacao;
     }
 
     calcularMulta(diasAtraso){
